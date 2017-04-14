@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newlecture.web.data.dao.PlatformVerDao">
+	<select id="getList" resultType="com.newlecture.web.data.entity.PlatformVer">
+	SELECT `PLATFORM_VER`.`CODE`,
+    `PLATFORM_VER`.`NAME`,
+    `PLATFORM_VER`.`PLATFORM_CODE`
+	FROM `newlecture`.`PLATFORM_VER`
+	</select>
+	<select id="get" resultType="com.newlecture.web.data.entity.PlatformVer">
+	SELECT `PLATFORM_VER`.`CODE`,
+    `PLATFORM_VER`.`NAME`,
+    `PLATFORM_VER`.`PLATFORM_CODE`
+	FROM `newlecture`.`PLATFORM_VER` WHERE CODE=#{code}
+	</select>
+	
+	
+ 	<insert id="add" parameterType="com.newlecture.web.data.entity.PlatformVer">
+ 		<selectKey order="BEFORE" keyProperty="code" resultType="String">
+			select max(cast(code as unsigned))+1 Code from PLATFORMVER
+		</selectKey>
+		INSERT INTO `newlecture`.`PLATFORMVER`
+		(`CODE`,
+		`NAME`
+		)
+		VALUES
+		( #{code},
+		  #{name}
+		)
+		
+	</insert>
+	
+	<update id="update" parameterType="com.newlecture.web.data.entity.PlatformVer">
+		UPDATE `newlecture`.`PLATFORMVER`
+		SET
+		`NAME` = #{name}>
+		WHERE `CODE` = #{code}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM `newlecture`.`PLATFORMVER` WHERE CODE=#{code}	
+	</delete>
+</mapper>

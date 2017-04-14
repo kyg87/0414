@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 노드조작 예제  html-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+/* 	var btn1=$("#btn1");
+	
+		//btn1.bind("click", function(){
+		btn1.click(function(){
+			var img = $("<img/>"); // <> 없으면 셀렉터
+			img.attr("src", "../images/logo.png");
+			img.appendTo("table tr:nth-child(3) td"); */
+			//$("table tr:nth-child(3) td").append(img);
+			var img = $("<img/>"); // <> 없으면 셀렉터
+			img.attr("src", "../../images/logo.png");
+				
+			var td =$("table tr:nth-child(3) td");
+				
+			img.appendTo(td);
+			$("#btn1").click(function(){
+				
+				img.animate({
+					width:"300px",
+					border: "2px solid red",
+					opacity:0.5
+				
+				},1000, function(){
+					img.clone().appendTo(td);
+					})
+				.queue(function(){
+					img
+					.attr("src", "../../images/1.jpg");
+
+					img
+					.css("border", "2px solid red");
+
+					img.dequeue();
+				})	
+				.delay(500)	
+				.animate({
+					width: "100px"	
+				},{
+					duration:500,
+					queue:false,
+					step : function(now, fx){
+    					var data = fx.elem.id + " " + fx.prop + ": " + now;
+   						 $( "body" ).append( "<div>" + data + "</div>" );
+ 					 }
+				});
+				// 애니메이션 끝 
+				
+/* 				if (td.children().length == 0)
+						img.appendTo(td)
+						.parent()
+						.parent()
+						.parent()
+						.parent()
+						.clone()
+						.appendTo(td);
+					else
+						img.detach(); */
+
+				});
+	});
+</script>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text"/></td>
+			</tr>
+			<tr>
+				<th>분류</th>
+				<td>
+					<select>
+						<option>유머게시판</option>
+						<option>경 게시판</option>
+						<option>주 게시판</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
+				<td><input id="btn1" type= "button" value="버튼" /></td>
+			</tr>			
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.odd-box{
+	border: 1px solid red;
+	
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(function() {
+	//var _txt1= document.querySelector("#txt1");
+	
+/* 	var txt = $("input");
+
+	txt.eq(0).attr("value","오호호오호호");
+	txt.get(1).value="DOM"; */
+	
+/* 	var div =$("div");
+	
+	div.each(function(){
+		alert("aa")
+	}); */
+	
+/*     var div = $("div");
+    
+    div.children(":nth-child(1)").attr("value","1234"); */
+	
+	var input =$("input");
+	var toggleButton =$("#toggle-button");
+	
+	toggleButton.click(function(){
+		//input.each(function(index, el){
+		input.toggleClass("odd-box");
+		//});
+	});
+	
+});
+</script>
+</head>
+<body>
+<div>
+	<input id="toggle-button" type="button"  value="toggool"/>
+	</div>
+<div>
+	<input type="text" />
+	<div>
+	<input type="text" />
+	<input type="text" />
+	</div>
+	<input type="text" />
+	<input type="text" />
+</div>
+	<input type="text" />
+	<input type="text" />
+</body>
+</html>

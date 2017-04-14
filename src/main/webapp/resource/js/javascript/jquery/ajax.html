@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(function() {
+	
+	var getButton = $("#get-button");
+	var jsonButton = $("#json-button");
+	var scriptButton = $("#script-button");
+	var loadButton = $("#load-button");
+	
+	
+	getButton.click(function(){
+/* 		$.ajax("../room.html").done(function(data){
+			alert(data);
+		}).always(function(){
+			alert("complete")
+		}) */
+		
+/* 		$.ajax({
+			url : "../room.html",
+			complete : function(xhr, status){
+				alert(xhr.responseText);
+			}
+		}) */
+		
+/* 		$.get("../ajax-data.jsp", function(data){
+			alert(data);
+		}); */
+		
+/* 		$.getJSON("../ajax-data.jsp", function(data){
+			alert(data[0].writerName);
+		}); */
+		// get으로 가져오는 데이터는 
+		//1. 텍스트 $.get
+		//2. JSON   $.getJSON
+		//3. Script   $.getScript
+		//4. Partial   .load
+		
+/* 		$.getScript("script.js", function(){
+			alert("a1");
+		})
+		.done(function(){
+			alert("a2");
+		})*/
+		
+		//$("body div:last-child").load("../notice-reg-partial.jsp");
+		
+		var data =$("#form").serialize();
+		alert(data);
+		$.post("post-proc.jsp", data, function(d){
+			alert(d);
+		})
+	});
+});
+</script>
+</head>
+<body>
+	<div>
+		<input id="get-button" type="button" value="get"/>
+		<input id="json-button" type="button" value="getJSON"/>
+		<input id="script-button" type="button" value="getScript"/>
+		<input id="load-button" type="button" value="load"/>
+	</div>
+	<div>
+		<form id="form" action ="notice-reg-proc.jsp" method = "POST">
+            <table border="1">
+               <tbody>
+                  <tr>
+                     <th>제목</th>
+                     <td><input type="text" name="title" /></td>
+                  </tr>
+                  <tr>
+                     <th>첨부파일<progress value = "0" max="100" /></th>
+                     <td><input type="file" name="file1" /></td>
+                  </tr>
+                  <tr>
+                     <td colspan="2"><textarea rows="20" cols="80" name="content"></textarea>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+<!--             <div>
+               <input class="reg-button" type="submit" value="등록" /> <a href="notice.jsp">취소</a>
+            </div> -->
+         </form>
+	</div>
+</body>
+</html>

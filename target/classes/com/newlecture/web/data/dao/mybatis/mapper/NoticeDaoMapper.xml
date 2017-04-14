@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.newlecture.web.data.dao.NoticeDao">
+	<select id="lastCode" resultType="String">
+		select max(cast(code as unsigned)) CODE from NOTICE
+	</select>
+	
+<!-- 	<select id="get" resultType="com.newlecture.web.data.entity.NoticeView">
+		SELECT* FROM NOTICE_VIEW WHERE CODE=#{code}
+	</select> -->
+	
+		<select id="getPrev" resultType="com.newlecture.web.data.entity.NoticeView">
+		select * from NOTICE_VIEW 
+		where cast(code as unsigned) &lt; cast(#{code} as unsigned) 
+		order by regdate 
+		desc limit 0,1
+	</select>
+	
+	<select id="getNext" resultType="com.newlecture.web.data.entity.NoticeView">
+		select * from NOTICE_VIEW 
+		where cast(code as unsigned) &gt; cast(#{code} as unsigned) 
+		order by regdate 
+		asc limit 0,1
+	</select>
+	
+	<select id="getList" resultType="com.newlecture.web.data.entity.NoticeView">
+		SELECT* FROM NOTICE_VIEW 
+		WHERE BINARY ${field} LIKE '%${query}%' limit ${(page-1)*10},10
+	</select>
+	
+	<select id="getSize" resultType="Integer">
+		SELECT COUNT(CODE) SIZE FROM NOTICE WHERE BINARY ${param1} LIKE '%${param2}%'
+	</select>
+	
+	
+	
+<!-- 	<insert id="add">
+		<selectKey order="BEFORE" keyProperty="code" resultType="String">
+			select max(cast(code as unsigned))+1 Code from NOTICE
+		</selectKey>
+		INSERT INTO NOTICE(CODE,TITLE,WRITER,CONTENT)
+		VALUES(#{code},#{title},#{writer},#{content})
+	</insert> -->
+	
+	<update id="update">
+		UPDATE NOTICE 
+		SET TITLE=#{title},
+			CONTENT=#{content} 
+		WHERE CODE=#{code}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM NOTICE WHERE CODE=#{code}
+	</delete>
+</mapper>

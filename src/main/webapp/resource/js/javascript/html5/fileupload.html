@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+	#upload-zone{
+			width: 500px;
+			height: 300px;
+			background: yellow;
+	}
+	#upload-zone.enter{
+
+			background: orange;
+	}
+	#upload-zone.leave{
+
+			background: yellow;
+	}
+	
+	#drag-zone{
+		background: gray;
+		width: 500px;
+		height: 200px;
+	
+	}
+	
+	#drag-zone  a,
+	#drag-zone img{
+	display:block;
+	background: blue;
+	width: 100px;
+	height: 100px;	
+	
+	}
+	input[type='file']{
+			display: none;
+	}
+</style>
+<script>
+ 	$(function(){
+/*		//true 캡쳐링 false가 기본값
+		$("#drag-zone").get(0).addEventListener("click", function(){
+			
+			alert("zone");
+		}, true);
+		
+		$("#drag-zone > div > img").get(0).addEventListener("click", function(){
+			event.preventDefalult();
+			event.stopPropagation();
+			
+			alert("div");
+		}, true); */
+		
+		// 이벤트 버블링또는 통지를 이용하기
+/* 		$("#drag-zone").click(function(){
+			alert("zone");
+		});
+		$("#drag-zone > div").click(function(event){
+			event.stopPropagation();
+			alert("div");
+		}); */
+		
+/* 		$("#upload-zone").click(function(){
+			$("input[type='file']").trigger("click");
+		}); */
+ 		$("#drag-zone > a").bind("dragstart", function(event){
+			
+ 			var dt=event.originalEvent.dataTransfer;
+ 			dt.effectAllowed="copy";
+ 			
+ 			dt.setData("text/plain", "http://www.mozilla.org");
+ 			
+ 			console.log("start");
+		});
+		$("#upload-zone").bind("dragenter", function(){
+			$(this).addClass("enter");			
+			console.log("entered");
+		});
+		
+		$("#upload-zone").bind("dragover", function(event){
+		   	
+			//event.preventDefault();
+		    //event.stopPropagation();
+		    event.originalEvent.preventDefault();
+			console.log("over");
+		}); 
+		
+		$("#upload-zone").bind("dragleave", function(){
+			$(this).removeClass("enter")
+			console.log("leave");
+		});
+		
+		$("#upload-zone").bind("drop", function(event){
+			
+		  //event.preventDefault();
+		   //event.stopPropagation();
+		   var dt= event.originalEvent.dataTransfer;
+		   //var data = dt.getData("text/plain");
+		   //alert(data);
+		   var validate = dt.types[0].indexOf('Files')>=0;
+		   if(!validate){
+			   alert("파일형식이 아닙니다.")
+			   return;
+		   }
+		   
+		   var size = dt.files.length;
+		   if(size>1){
+			   alert("두개이상은 전송할 수 없습니다.")
+			   return;
+		   }
+		   
+		   var request = new XMLHttpRequest();
+		   request.addEventListener("progress", function(){
+			   
+		   });
+		   
+			request.addEventListener("load", function(){
+			   
+		   });
+		   
+			request.addEventListener("error", function(){
+	   
+		   });
+		   
+			request.open("POST", "/upload");
+			var fd= new FormData();
+			fd.append("file",dt.files[0])
+			
+			request.send(fd);
+			
+			//console.log("drop");
+		});
+	});
+	
+/* 	function allowDrop(ev) {
+	    ev.preventDefault();
+	}
+
+	function drag(ev) {
+	    ev.dataTransfer.setData("text", ev.target.id);
+	}
+
+	function drop(ev) {
+	    ev.preventDefault();
+	    var data = ev.dataTransfer.getData("text");
+	    ev.target.appendChild(document.getElementById(data));
+	} */
+</script>
+<body>
+	<div id="upload-zone">
+		업로드할 파일을 선택또는 끌어 놓기
+	</div>
+	<div id="drag-zone">
+		<a draggable="true" href="http://www.google.com">데헷 </a>
+		<img src="http://cfs3.tistory.com/upload_control/download.blog?fhandle=YmxvZzEwOTc0N0BmczMudGlzdG9yeS5jb206L2F0dGFjaC8wLzU3LmpwZw%3D%3D">
+	</div>
+	<input type="file"/>
+</body>
+</html>

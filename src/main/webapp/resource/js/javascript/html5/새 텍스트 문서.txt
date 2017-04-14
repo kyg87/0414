@@ -1,0 +1,25 @@
+/*		//true 캡쳐링 false가 기본값
+		$("#drag-zone").get(0).addEventListener("click", function(){
+			
+			alert("zone");
+		}, true);
+		
+		$("#drag-zone > div > img").get(0).addEventListener("click", function(){
+			event.preventDefalult();
+			event.stopPropagation();
+			
+			alert("div");
+		}, true); */
+		
+		// 이벤트 버블링또는 통지를 이용하기
+/* 		$("#drag-zone").click(function(){
+			alert("zone");
+		});
+		$("#drag-zone > div").click(function(event){
+			event.stopPropagation();
+			alert("div");
+		}); */
+		
+/* 		$("#upload-zone").click(function(){
+			$("input[type='file']").trigger("click");
+		}); */
